@@ -1,12 +1,11 @@
 package br.com.ivo.awesome.endpoint;
 
-import java.util.List;
 
-import org.apache.coyote.http11.Http11AprProtocol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,5 +38,11 @@ public class StudentEndpoint {
 		if(index == -1)
 			return new ResponseEntity<>(new CustomErrorType("Estudante não encontrado"), HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(Student.studentList.get(index),HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<?> save(@RequestBody Student student) {
+		Student.studentList.add(student);
+		return new ResponseEntity<>(student,HttpStatus.OK);
 	}
 }
